@@ -17,7 +17,11 @@ mlda-cw1/
 │   └── mlda_cw1.ipynb  # full analysis: load -> EDA -> preparation -> models -> evaluation
 ├── src/mlda_cw1/
 │   └── codes.py        # decoding tables for the PUMS numeric codes
-├── app/                # Streamlit app (in progress)
+├── app/
+│   ├── Home.py         # Streamlit app entry point
+│   ├── utils.py        # shared data loading and preparation
+│   └── pages/          # Data Exploration, Preprocessing, Model Training, Predict Wage, Model Evaluation
+├── models/             # final model (wage_model.joblib) + result tables saved by the notebook
 ├── pyproject.toml      # dependencies
 ├── uv.lock             # exact pinned versions (lock file)
 └── requirements.txt    # same dependencies for pip / Streamlit Cloud
@@ -45,11 +49,25 @@ Without uv: `python -m venv .venv`, activate it, then `pip install -r requiremen
 
 ## Run the notebook
 
-Open `notebooks/mlda_cw1.ipynb` in VS Code or Jupyter, select the `.venv` kernel and run all cells.
+Open `notebooks/mlda_cw1.ipynb` in VS Code or Jupyter, select the `.venv` kernel and run all cells (a few minutes; model training is the longest part).
 
 ## Run the Streamlit app
 
-*(Coming in a later milestone.)*
+Run the notebook once first (it saves the final model and result tables to `models/`), then:
+
+```bash
+uv run streamlit run app/Home.py
+```
+
+The app opens in the browser at http://localhost:8501. Pages:
+
+1. **Data Exploration** — interactive dashboard with filters (sex, education, occupation, age).
+2. **Preprocessing** — cleaning steps, with an interactive error threshold.
+3. **Model Training** — train Linear Regression, KNN, Random Forest or XGBoost with chosen hyperparameters and see test metrics.
+4. **Predict Wage** — enter a profile and get a wage estimate from the final model.
+5. **Model Evaluation** — test results, overfitting check, permutation importance and fairness tables.
+
+**Deployed app:** *(link will be added after deployment)*
 
 ## Licence
 
